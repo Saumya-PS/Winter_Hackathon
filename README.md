@@ -12,10 +12,27 @@ Due to the regalarly faced problems like garbage overflows, pothholes, broken st
 This project is a simple Web Application that allow the citizens to register their compalains through a web portal. As, they just need to provide the basic details, images and local information. Their complaints are auto processed by backend system and made available to goverment departments via admin dashboard. The system focuses on trasparency , privacy and easy to use.
 
 # Task for Round 1
+In Round-1, the focus is on building a working prototype to demonstrate the core idea and user flow.
 
+* Created User Complaint Page with required input fields
+* Created Admin Dashboard Page to view submitted complaints
+* Implemented form submission flow on live server
+* Added alert pop-ups to confirm successful or failed submissions
+* Structured the project repository with frontend, backend, and documentation
+* Prepared README files explaining project idea, flow, and future scope
+  
+Note: The current implementation focuses on UI flow and interaction. Backend and other advanced features will be added in further rounds.
 
 # For Further Rounds
+In the next rounds, the project will be extended to include more automation, security, and real-world usability.
 
+* Backend logic for storing complaints in a database
+* Rule-based and AI-based complaint category division
+* Location-based issue mapping visualization
+* Secure user verification (DigiLocker integration)
+* Role-based admin access for different departments
+* Status tracking and notification system
+* Integration with government grievance platforms
 
 # Technology Stack 
 * Frontend: Web application (HTML/CSS/JavaScript)

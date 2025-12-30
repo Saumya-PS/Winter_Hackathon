@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Citizen Issue Reporting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #2c2c2c;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .complaint-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+        }
+        .complaint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .complaint-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-pending {
+            background: #dc3545;
+            color: white;
+        }
+        .status-progress {
+            background: #6c757d;
+            color: white;
+        }
+        .status-resolved {
+            background: #28a745;
+            color: white;
+        }
+        .complaint-details {
+            margin-bottom: 15px;
+        }
+        .detail-row {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #333;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .btn-progress {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-resolve {
+            background: #28a745;
+            color: white;
+        }
+        .btn-pending {
+            background: #dc3545;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .nav-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+        .no-complaints {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+        }
+        .stat-card h3 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        .stat-card p {
+            font-size: 14px;
+        }
+        .stat-pending { background: #dc3545; }
+        .stat-progress { background: #6c757d; }
+        .stat-resolved { background: #28a745; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏛️ Admin Dashboard</h1>
+        <p class="subtitle">Citizen Issue Reporting System</p>
+
+        <div class="stats">
+            <div class="stat-card stat-pending">
+                <h3 id="pendingCount">0</h3>
+                <p>Pending</p>
+            </div>
+            <div class="stat-card stat-progress">
+                <h3 id="progressCount">0</h3>
+                <p>In Progress</p>
+            </div>
+            <div class="stat-card stat-resolved">
+                <h3 id="resolvedCount">0</h3>
+                <p>Resolved</p>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="departmentFilter">Filter by Department</label>
+                <select id="departmentFilter">
+                    <option value="">All Departments</option>
+                    <option value="Roads">Roads & Infrastructure</option>
+                    <option value="Water">Water Supply</option>
+                    <option value="Electricity">Electricity</option>
+                    <option value="Sanitation">Sanitation</option>
+                    <option value="Public Safety">Public Safety</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="statusFilter">Filter by Status</label>
+                <select id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="complaintsContainer">
+            <div class="no-complaints">
+                <h2>📋 No Complaints Yet</h2>
+                <p>Complaints submitted by users will appear here.</p>
+            </div>
+        </div>
+
+        <a href="index.html" class="nav-link">← Back to User Portal</a>
+    </div>
+
+    <script>
+        function updateStatus(button, newStatus) {
+            const card = button.closest('.complaint-card');
+            const title = card.querySelector('.complaint-title').textContent;
+            const badge = card.querySelector('.status-badge');
+            
+            // Update status
+            card.setAttribute('data-status', newStatus);
+            badge.textContent = newStatus;
+            
+            // Update badge class
+            badge.className = 'status-badge';
+            if (newStatus === 'Pending') {
+                badge.classList.add('status-pending');
+            } else if (newStatus === 'In Progress') {
+                badge.classList.add('status-progress');
+            } else if (newStatus === 'Resolved') {
+                badge.classList.add('status-resolved');
+            }
+            
+            // Show alert
+            alert('✅ Status Updated!\n\nComplaint: ' + title + '\nNew Status: ' + newStatus);
+            
+            // Update stats
+            updateStats();
+        }
+
+        function updateStats() {
+            const cards = document.querySelectorAll('.complaint-card');
+            let pending = 0, progress = 0, resolved = 0;
+            
+            cards.forEach(card => {
+                const status = card.getAttribute('data-status');
+                if (status === 'Pending') pending++;
+                else if (status === 'In Progress') progress++;
+                else if (status === 'Resolved') resolved++;
+            });
+            
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('progressCount').textContent = progress;
+            document.getElementById('resolvedCount').textContent = resolved;
+        }
+
+        function filterComplaints() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const departmentFilter = document.getElementById('departmentFilter').value;
+            const cards = document.querySelectorAll('.complaint-card');
+            
+            cards.forEach(card => {
+                const status = card.getAttribute('data-status');
+                const category = card.getAttribute('data-category');
+                
+                const statusMatch = !statusFilter || status === statusFilter;
+                const categoryMatch = !departmentFilter || category === departmentFilter;
+                
+                if (statusMatch && categoryMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Add event listeners for filters
+        document.getElementById('statusFilter').addEventListener('change', filterComplaints);
+        document.getElementById('departmentFilter').addEventListener('change', filterComplaints);
+    </script>
+</body>
+</html>
