@@ -8,13 +8,13 @@
 
 
 ## Overall System Flow
-![Overall System Flow](docs/flows/overall_flow.png)
+![Overall System Flow](docs/flows/overall_flow.jpeg)
 
 ## User Complaint Submission Flow
-![User Flow](docs/flows/user_complaint_flow.png)
+![User Flow](docs/flows/user_complaint_flow.jpeg)
 
 ## Backend Processing Flow
-![Backend Flow](docs/flows/backend_processing_flow.png)
+![Backend Flow](docs/flows/backend_processing_flow.jpeg)
 
 ## Admin Complaint Handling Flow
-![Admin Flow](docs/flows/admin_dashboard_flow.png)
+![Admin Flow](docs/flows/admin_dashboard_flow.jpeg)
